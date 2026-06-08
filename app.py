@@ -778,13 +778,7 @@ def render_hero() -> None:
 
 
 def card(kicker: str, title: str, body: str) -> str:
-    return f"""
-    <div class="glass-card">
-      <div class="kicker">{esc(kicker)}</div>
-      <h3>{esc(title)}</h3>
-      <p>{esc(body)}</p>
-    </div>
-    """
+    return f'<div class="glass-card"><div class="kicker">{esc(kicker)}</div><h3>{esc(title)}</h3><p>{esc(body)}</p></div>'
 
 
 def render_overview() -> None:
@@ -816,16 +810,7 @@ def render_overview() -> None:
 def score_card(score: ModalityScore) -> str:
     probability = max(0, min(100, score.fake_probability * 100))
     signal = score.signals[0] if score.signals else "No dominant signal."
-    return f"""
-    <div class="score-card">
-      <div class="score-top">
-        <div class="score-name">{esc(score.name)}</div>
-        <div class="score-value">{probability:.1f}%</div>
-      </div>
-      <div class="bar" style="--value:{probability:.1f}%"><span></span></div>
-      <p class="score-signal">{esc(signal)}</p>
-    </div>
-    """
+    return f'<div class="score-card"><div class="score-top"><div class="score-name">{esc(score.name)}</div><div class="score-value">{probability:.1f}%</div></div><div class="bar" style="--value:{probability:.1f}%"><span></span></div><p class="score-signal">{esc(signal)}</p></div>'
 
 
 def render_result(result: PredictionResult) -> None:
