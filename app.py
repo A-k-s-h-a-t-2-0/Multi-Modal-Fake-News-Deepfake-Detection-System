@@ -86,8 +86,11 @@ def theme_tokens(mode: str) -> dict[str, str]:
 
 def inject_css(mode: str) -> None:
     t = theme_tokens(mode)
-    # Using Streamlit static file serving to serve the 3.6MB GIF efficiently
-    bg_url = "/app/static/line-noise-loop.gif"
+    # Map theme to corresponding background image URL
+    if mode == "Dark":
+        bg_url = "/app/static/line-noise-loop.gif"
+    else:
+        bg_url = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif"
 
     st.markdown(
         f"""
@@ -122,12 +125,30 @@ def inject_css(mode: str) -> None:
         [data-testid="stHeader"] {{
           background: transparent !important;
         }}
+        [data-testid="stSidebar"] {{
+          background: var(--surface) !important;
+          backdrop-filter: blur(24px) saturate(120%);
+          -webkit-backdrop-filter: blur(24px) saturate(120%);
+          border-right: 1px solid var(--line);
+        }}
+        [data-testid="stSidebar"] .stMarkdown h2 {{
+          color: var(--ink);
+          font-weight: 800;
+          margin-bottom: 1rem;
+        }}
+        div[data-baseweb="select"] {{
+          background: var(--field) !important;
+          color: var(--ink) !important;
+          border-radius: 12px;
+          border: 1px solid var(--line);
+        }}
 
         .stApp {{
           color: var(--ink);
           background:
             var(--overlay),
-            url("{bg_url}") no-repeat center center fixed;
+            url("{bg_url}") no-repeat center center fixed,
+            url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif") no-repeat center center fixed;
           background-size: cover !important;
         }}
 
@@ -1039,7 +1060,16 @@ def render_roadmap() -> None:
 detector = load_detector()
 sample = load_sample()
 
-st.session_state.theme_mode = "Dark"
+# Elegant glassmorphic sidebar for configuration
+with st.sidebar:
+    st.markdown("## Configuration")
+    selected_theme = st.selectbox(
+        "Theme Mode",
+        options=["Dark (Radiant Amber)", "Light (Royal Oceanic Blue)"],
+        index=0,
+    )
+    theme_mode = "Dark" if "Dark" in selected_theme else "Light"
+    st.session_state.theme_mode = theme_mode
 
 inject_css(st.session_state.theme_mode)
 render_hero()
