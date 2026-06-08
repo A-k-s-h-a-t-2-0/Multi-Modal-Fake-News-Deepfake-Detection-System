@@ -12,14 +12,7 @@ from src.multimodal_detector import MultiModalFakeNewsDetector
 from src.schemas import ModalityScore, NewsInput, PredictionResult
 
 
-@st.cache_data
-def get_base64_gif(gif_path: str) -> str:
-    with open(gif_path, "rb") as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-
-
+# Static serving is enabled, base64 caching is no longer required.
 st.set_page_config(
     page_title="Multi-Modal Fake News & Deepfake Detection System",
     page_icon="📊",
@@ -93,11 +86,8 @@ def theme_tokens(mode: str) -> dict[str, str]:
 
 def inject_css(mode: str) -> None:
     t = theme_tokens(mode)
-    try:
-        gif_base64 = get_base64_gif("line-noise-loop.gif")
-        bg_url = f"data:image/gif;base64,{gif_base64}"
-    except Exception:
-        bg_url = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif"
+    # Using Streamlit static file serving to serve the 3.6MB GIF efficiently
+    bg_url = "/app/static/line-noise-loop.gif"
 
     st.markdown(
         f"""
@@ -122,7 +112,11 @@ def inject_css(mode: str) -> None:
           --border-highlight: {t["border_highlight"]};
         }}
 
-        [data-testid="stAppViewContainer"] {{
+        [data-testid="stAppViewContainer"],
+        [data-testid="stMain"],
+        [data-testid="stMainBlockContainer"],
+        .main,
+        section.main {{
           background: transparent !important;
         }}
         [data-testid="stHeader"] {{
