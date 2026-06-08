@@ -64,7 +64,7 @@ def theme_tokens(mode: str) -> dict[str, str]:
     return {
         "bg": "rgba(15, 10, 5, 0.95)",
         "bg2": "rgba(36, 24, 13, 0.98)",
-        "overlay": "radial-gradient(circle at 18% 8%, rgba(217, 119, 6, 0.12), transparent 45%), radial-gradient(circle at 86% 20%, rgba(245, 158, 11, 0.08), transparent 45%), linear-gradient(135deg, #0f0a05, #24180d 50%, #0f0a05)",
+        "overlay": "radial-gradient(circle at 18% 8%, rgba(217, 119, 6, 0.22), transparent 45%), radial-gradient(circle at 86% 20%, rgba(245, 158, 11, 0.15), transparent 45%), linear-gradient(135deg, rgba(15, 10, 5, 0.82), rgba(36, 24, 13, 0.76) 50%, rgba(15, 10, 5, 0.82))",
         "surface": "rgba(36, 24, 13, 0.65)",
         "surface2": "rgba(54, 36, 20, 0.8)",
         "ink": "#f8fafc",
@@ -116,7 +116,10 @@ def inject_css(mode: str) -> None:
 
         .stApp {{
           color: var(--ink);
-          background: var(--overlay);
+          background:
+            var(--overlay),
+            url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif") no-repeat center center fixed;
+          background-size: cover !important;
         }}
 
         .block-container {{
@@ -176,25 +179,6 @@ def inject_css(mode: str) -> None:
         [data-testid="stTextArea"] textarea:hover,
         [data-testid="stFileUploader"] section:hover {{
           transform: translateY(-1px);
-        }}
-
-        div[data-testid="stSegmentedControl"] {{
-          background: var(--surface) !important;
-          backdrop-filter: blur(10px);
-          border-radius: 999px;
-          padding: 4px;
-          border: 1px solid var(--line);
-          box-shadow: var(--shadow);
-        }}
-        div[data-testid="stSegmentedControl"] button {{
-          border-radius: 999px !important;
-          border: none !important;
-          color: var(--muted) !important;
-        }}
-        div[data-testid="stSegmentedControl"] button[aria-checked="true"] {{
-          background: var(--surface2) !important;
-          color: var(--ink) !important;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }}
 
         .stButton > button {{
@@ -753,30 +737,11 @@ def inject_css(mode: str) -> None:
     )
 
 
-def render_topbar(mode: str) -> None:
-    st.markdown(
-        f"""
-        <div class="topbar">
-          <div class="brand">
-            <div class="brand-mark">ML</div>
-            <div>
-              <div>Multi-Modal Misinformation Detector</div>
-              <div class="nav-note">Late-fusion model for text, image, source, and claim modalities</div>
-            </div>
-          </div>
-          <div class="pill"><strong>{esc(mode)}</strong> mode active</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-
 def render_hero() -> None:
     st.markdown(
         """
         <section class="hero">
           <div class="hero-copy-wrap">
-            <div class="eyebrow">Amazon ML School Portfolio Project</div>
             <h1 class="hero-title">Multi-Modal Misinformation & Deepfake <span>Detection Pipeline</span></h1>
             <p class="hero-desc">
               A scientific Machine Learning framework evaluating news credibility through
@@ -1080,18 +1045,9 @@ def render_roadmap() -> None:
 detector = load_detector()
 sample = load_sample()
 
-theme_col, spacer_col = st.columns([0.22, 0.78], vertical_alignment="center")
-with theme_col:
-    selected_theme = st.segmented_control(
-        "Theme",
-        ["Dark", "Light"],
-        default=st.session_state.get("theme_mode", "Dark"),
-        label_visibility="collapsed",
-    )
-st.session_state.theme_mode = selected_theme or "Dark"
+st.session_state.theme_mode = "Dark"
 
 inject_css(st.session_state.theme_mode)
-render_topbar(st.session_state.theme_mode)
 render_hero()
 
 tabs = st.tabs(
