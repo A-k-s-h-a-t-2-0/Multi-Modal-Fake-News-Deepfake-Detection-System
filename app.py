@@ -88,7 +88,7 @@ def inject_css(mode: str) -> None:
     t = theme_tokens(mode)
     # Map theme to corresponding background image URL
     if mode == "Dark":
-        bg_url = "/app/static/line-noise-loop.gif"
+        bg_url = "/static/line-noise-loop.gif"
     else:
         bg_url = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif"
 
