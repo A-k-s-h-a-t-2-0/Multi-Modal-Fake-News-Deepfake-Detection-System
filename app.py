@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import html
 import json
+import base64
 from pathlib import Path
 
 import streamlit as st
@@ -9,6 +10,14 @@ from PIL import Image
 
 from src.multimodal_detector import MultiModalFakeNewsDetector
 from src.schemas import ModalityScore, NewsInput, PredictionResult
+
+
+@st.cache_data
+def get_base64_gif(gif_path: str) -> str:
+    with open(gif_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
 
 
 st.set_page_config(
@@ -84,6 +93,12 @@ def theme_tokens(mode: str) -> dict[str, str]:
 
 def inject_css(mode: str) -> None:
     t = theme_tokens(mode)
+    try:
+        gif_base64 = get_base64_gif("line-noise-loop.gif")
+        bg_url = f"data:image/gif;base64,{gif_base64}"
+    except Exception:
+        bg_url = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif"
+
     st.markdown(
         f"""
         <style>
@@ -118,7 +133,7 @@ def inject_css(mode: str) -> None:
           color: var(--ink);
           background:
             var(--overlay),
-            url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif") no-repeat center center fixed;
+            url("{bg_url}") no-repeat center center fixed;
           background-size: cover !important;
         }}
 
@@ -775,24 +790,24 @@ def card(kicker: str, title: str, body: str) -> str:
 def render_overview() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Pipeline Overview</h2>
-        <p class="section-copy">
-          This system is designed as a modular misinformation classification pipeline, transitioning from 
-          heuristic baseline encoders to trained transformer-based NLP and deepfake image forensics models.
-        </p>
+<h2 class="section-title">Pipeline Overview</h2>
+<p class="section-copy">
+  This system is designed as a modular misinformation classification pipeline, transitioning from 
+  heuristic baseline encoders to trained transformer-based NLP and deepfake image forensics models.
+</p>
         """,
         unsafe_allow_html=True,
     )
     st.markdown(
         f"""
-        <div class="glass-grid">
-          {card("Problem", "Misinformation classification", "Classify suspicious news items into credibility categories with calibrated probabilities instead of a binary label.")}
-          {card("Input Modalities", "Text, metadata, and images", "Accepts article headline, body text, publisher source domain, primary claim, evidence snippets, and news image.")}
-          {card("Output Metrics", "Calibrated confidence & risk bands", "Computes modality-specific risk scores, fused fake probability, class label, and model explanations.")}
-          {card("NLP Encoder", "Transformer text classifier", "The text processing pipeline is ready for fine-tuning pre-trained models such as DistilBERT, RoBERTa, or DeBERTa.")}
-          {card("Vision Encoder", "Image manipulation forensics", "The image processing pipeline uses feature extraction suitable for deepfake and image forgery classifiers (e.g., EfficientNet, ViT).")}
-          {card("Late Fusion", "Modular ensemble architecture", "Ensembles predictions from individual encoders using weighted averaging, with a path to logistic regression or MLP fusion.")}
-        </div>
+<div class="glass-grid">
+{card("Problem", "Misinformation classification", "Classify suspicious news items into credibility categories with calibrated probabilities instead of a binary label.")}
+{card("Input Modalities", "Text, metadata, and images", "Accepts article headline, body text, publisher source domain, primary claim, evidence snippets, and news image.")}
+{card("Output Metrics", "Calibrated confidence & risk bands", "Computes modality-specific risk scores, fused fake probability, class label, and model explanations.")}
+{card("NLP Encoder", "Transformer text classifier", "The text processing pipeline is ready for fine-tuning pre-trained models such as DistilBERT, RoBERTa, or DeBERTa.")}
+{card("Vision Encoder", "Image manipulation forensics", "The image processing pipeline uses feature extraction suitable for deepfake and image forgery classifiers (e.g., EfficientNet, ViT).")}
+{card("Late Fusion", "Modular ensemble architecture", "Ensembles predictions from individual encoders using weighted averaging, with a path to logistic regression or MLP fusion.")}
+</div>
         """,
         unsafe_allow_html=True,
     )
@@ -947,24 +962,24 @@ def render_architecture() -> None:
 def render_datasets() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Datasets & Training Roadmap</h2>
-        <p class="section-copy">
-          These datasets make the project credible in interviews because they map directly to the
-          modalities and evaluation plan.
-        </p>
+<h2 class="section-title">Datasets & Training Roadmap</h2>
+<p class="section-copy">
+  These datasets make the project credible in interviews because they map directly to the
+  modalities and evaluation plan.
+</p>
         """,
         unsafe_allow_html=True,
     )
     st.markdown(
         f"""
-        <div class="glass-grid">
-          {card("Text", "FakeNewsNet", "News content, social context, publisher information, and labels for real-world misinformation research.")}
-          {card("Claims", "LIAR Dataset", "Short political claims with fine-grained truthfulness labels for claim classification.")}
-          {card("Articles", "Kaggle Fake/Real News", "Large article-level baseline dataset for quick text classifier experiments.")}
-          {card("Deepfake", "DFDC", "Large-scale deepfake challenge data for video and face manipulation detection.")}
-          {card("Deepfake", "FaceForensics++", "Common benchmark for manipulated facial media and compression robustness.")}
-          {card("Deepfake", "Celeb-DF", "Harder celebrity deepfake dataset for stronger generalization testing.")}
-        </div>
+<div class="glass-grid">
+{card("Text", "FakeNewsNet", "News content, social context, publisher information, and labels for real-world misinformation research.")}
+{card("Claims", "LIAR Dataset", "Short political claims with fine-grained truthfulness labels for claim classification.")}
+{card("Articles", "Kaggle Fake/Real News", "Large article-level baseline dataset for quick text classifier experiments.")}
+{card("Deepfake", "DFDC", "Large-scale deepfake challenge data for video and face manipulation detection.")}
+{card("Deepfake", "FaceForensics++", "Common benchmark for manipulated facial media and compression robustness.")}
+{card("Deepfake", "Celeb-DF", "Harder celebrity deepfake dataset for stronger generalization testing.")}
+</div>
         """,
         unsafe_allow_html=True,
     )
@@ -973,22 +988,22 @@ def render_datasets() -> None:
 def render_evaluation() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Evaluation & Metrics</h2>
-        <p class="section-copy">
-          A strong ML project is not just a model; it includes calibration, ablations, error analysis,
-          and a metric story that explains false-positive and false-negative tradeoffs.
-        </p>
+<h2 class="section-title">Evaluation & Metrics</h2>
+<p class="section-copy">
+  A strong ML project is not just a model; it includes calibration, ablations, error analysis,
+  and a metric story that explains false-positive and false-negative tradeoffs.
+</p>
         """,
         unsafe_allow_html=True,
     )
     st.markdown(
         f"""
-        <div class="glass-grid two">
-          {card("Classification", "Accuracy, Precision, Recall, F1", "Use F1 and recall heavily because missing harmful fake content can be costly.")}
-          {card("Ranking", "ROC-AUC and PR-AUC", "Evaluate probability quality across thresholds rather than only one hard decision boundary.")}
-          {card("Calibration", "Reliability curve and ECE", "Show whether a 70% fake probability really behaves like 70% historical risk.")}
-          {card("Ablation", "Text vs image vs source vs claim", "Measure each modality independently to prove fusion improves the final system.")}
-        </div>
+<div class="glass-grid two">
+{card("Classification", "Accuracy, Precision, Recall, F1", "Use F1 and recall heavily because missing harmful fake content can be costly.")}
+{card("Ranking", "ROC-AUC and PR-AUC", "Evaluate probability quality across thresholds rather than only one hard decision boundary.")}
+{card("Calibration", "Reliability curve and ECE", "Show whether a 70% fake probability really behaves like 70% historical risk.")}
+{card("Ablation", "Text vs image vs source vs claim", "Measure each modality independently to prove fusion improves the final system.")}
+</div>
         """,
         unsafe_allow_html=True,
     )
@@ -997,24 +1012,24 @@ def render_evaluation() -> None:
 def render_explainability() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Model Interpretability (XAI)</h2>
-        <p class="section-copy">
-          The inference pipeline outputs class probabilities along with textual explanations. In the production pipeline, formal
-          eXplainable ML (XAI) methods are integrated into each feature extraction layer.
-        </p>
+<h2 class="section-title">Model Interpretability (XAI)</h2>
+<p class="section-copy">
+  The inference pipeline outputs class probabilities along with textual explanations. In the production pipeline, formal
+  eXplainable ML (XAI) methods are integrated into each feature extraction layer.
+</p>
         """,
         unsafe_allow_html=True,
     )
     st.markdown(
         """
-        <div class="wide-panel">
-          <div class="timeline">
-            <div class="timeline-item"><b>Text</b><span>Use LIME, SHAP, integrated gradients, or attention rollout to identify phrases that pushed the prediction.</span></div>
-            <div class="timeline-item"><b>Image</b><span>Use Grad-CAM or attention maps to highlight image regions that look manipulated.</span></div>
-            <div class="timeline-item"><b>Claim</b><span>Return top evidence snippets, similarity scores, and contradiction/entailment labels.</span></div>
-            <div class="timeline-item"><b>Fusion</b><span>Use SHAP over modality scores and metadata features to explain the final ensemble decision.</span></div>
-          </div>
-        </div>
+<div class="wide-panel">
+<div class="timeline">
+<div class="timeline-item"><b>Text</b><span>Use LIME, SHAP, integrated gradients, or attention rollout to identify phrases that pushed the prediction.</span></div>
+<div class="timeline-item"><b>Image</b><span>Use Grad-CAM or attention maps to highlight image regions that look manipulated.</span></div>
+<div class="timeline-item"><b>Claim</b><span>Return top evidence snippets, similarity scores, and contradiction/entailment labels.</span></div>
+<div class="timeline-item"><b>Fusion</b><span>Use SHAP over modality scores and metadata features to explain the final ensemble decision.</span></div>
+</div>
+</div>
         """,
         unsafe_allow_html=True,
     )
@@ -1023,20 +1038,20 @@ def render_explainability() -> None:
 def render_roadmap() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Development Roadmap</h2>
-        <p class="section-copy">
-          The development schedule outlines the transition from a heuristic baseline to trained 
-          deep learning models and deployed inference microservices.
-        </p>
-        <div class="wide-panel">
-          <div class="timeline">
-            <div class="timeline-item"><b>Phase 1</b><span>Transparent baseline, Streamlit interface, sample inference, and model card.</span></div>
-            <div class="timeline-item"><b>Phase 2</b><span>Train DistilBERT on FakeNewsNet/Kaggle text and compare with TF-IDF logistic regression.</span></div>
-            <div class="timeline-item"><b>Phase 3</b><span>Train image/deepfake model with EfficientNet or ViT on DFDC or FaceForensics++ samples.</span></div>
-            <div class="timeline-item"><b>Phase 4</b><span>Add sentence-transformer retrieval, NLI claim verification, and SHAP/LIME explanations.</span></div>
-            <div class="timeline-item"><b>Phase 5</b><span>Deploy with FastAPI, Streamlit Cloud or Docker, CI tests, experiment tracking, and ablation report.</span></div>
-          </div>
-        </div>
+<h2 class="section-title">Development Roadmap</h2>
+<p class="section-copy">
+  The development schedule outlines the transition from a heuristic baseline to trained 
+  deep learning models and deployed inference microservices.
+</p>
+<div class="wide-panel">
+<div class="timeline">
+<div class="timeline-item"><b>Phase 1</b><span>Transparent baseline, Streamlit interface, sample inference, and model card.</span></div>
+<div class="timeline-item"><b>Phase 2</b><span>Train DistilBERT on FakeNewsNet/Kaggle text and compare with TF-IDF logistic regression.</span></div>
+<div class="timeline-item"><b>Phase 3</b><span>Train image/deepfake model with EfficientNet or ViT on DFDC or FaceForensics++ samples.</span></div>
+<div class="timeline-item"><b>Phase 4</b><span>Add sentence-transformer retrieval, NLI claim verification, and SHAP/LIME explanations.</span></div>
+<div class="timeline-item"><b>Phase 5</b><span>Deploy with FastAPI, Streamlit Cloud or Docker, CI tests, experiment tracking, and ablation report.</span></div>
+</div>
+</div>
         """,
         unsafe_allow_html=True,
     )
