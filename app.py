@@ -43,38 +43,42 @@ def esc(value: object) -> str:
 def theme_tokens(mode: str) -> dict[str, str]:
     if mode == "Light":
         return {
-            "bg": "#e9f0f4",
-            "bg2": "#fbfcf8",
-            "surface": "rgba(255, 255, 255, 0.74)",
-            "surface2": "rgba(255, 255, 255, 0.92)",
-            "ink": "#101820",
-            "muted": "#667382",
-            "line": "rgba(22, 36, 49, 0.14)",
-            "accent": "#ff7a30",
-            "accent2": "#1b8f7a",
-            "accent3": "#4d7cff",
-            "danger": "#e5485c",
-            "shadow": "0 30px 90px rgba(34, 54, 70, 0.18)",
-            "field": "rgba(255, 255, 255, 0.86)",
-            "device": "#11191f",
-            "device2": "#263238",
+            "bg": "rgba(235, 244, 250, 0.85)",
+            "bg2": "rgba(200, 225, 245, 0.8)",
+            "overlay": "radial-gradient(circle at 18% 8%, rgba(0, 132, 255, 0.18), transparent 45%), radial-gradient(circle at 86% 20%, rgba(0, 76, 255, 0.12), transparent 40%), linear-gradient(135deg, rgba(235, 244, 250, 0.82), rgba(200, 225, 245, 0.76) 60%, rgba(220, 235, 248, 0.85))",
+            "surface": "rgba(255, 255, 255, 0.55)",
+            "surface2": "rgba(240, 248, 255, 0.75)",
+            "ink": "#061a33",
+            "muted": "#4a6785",
+            "line": "rgba(14, 89, 199, 0.18)",
+            "accent": "#0e59c7",
+            "accent2": "#0088cc",
+            "accent3": "#00a8cc",
+            "danger": "#d62828",
+            "shadow": "0 24px 60px rgba(14, 89, 199, 0.12)",
+            "field": "rgba(255, 255, 255, 0.8)",
+            "device": "#05101a",
+            "device2": "#0a1c33",
+            "border_highlight": "rgba(255, 255, 255, 0.45)",
         }
     return {
-        "bg": "#111715",
-        "bg2": "#26302e",
-        "surface": "rgba(34, 44, 42, 0.72)",
-        "surface2": "rgba(45, 57, 54, 0.86)",
-        "ink": "#f5f5ee",
-        "muted": "#b8c0b8",
-        "line": "rgba(245, 245, 238, 0.13)",
-        "accent": "#ff8848",
-        "accent2": "#7cd8bb",
-        "accent3": "#91b3ff",
-        "danger": "#ff6374",
-        "shadow": "0 34px 100px rgba(0, 0, 0, 0.42)",
-        "field": "rgba(19, 27, 25, 0.74)",
-        "device": "#060908",
-        "device2": "#17201e",
+        "bg": "rgba(20, 14, 8, 0.85)",
+        "bg2": "rgba(38, 26, 15, 0.8)",
+        "overlay": "radial-gradient(circle at 18% 8%, rgba(255, 179, 0, 0.15), transparent 45%), radial-gradient(circle at 86% 20%, rgba(255, 102, 0, 0.12), transparent 45%), linear-gradient(135deg, rgba(20, 14, 8, 0.82), rgba(38, 26, 15, 0.76) 60%, rgba(15, 10, 5, 0.95))",
+        "surface": "rgba(38, 26, 15, 0.55)",
+        "surface2": "rgba(56, 38, 22, 0.75)",
+        "ink": "#ffeacc",
+        "muted": "#d1beab",
+        "line": "rgba(255, 179, 0, 0.18)",
+        "accent": "#ff9d00",
+        "accent2": "#ffb703",
+        "accent3": "#fb8500",
+        "danger": "#f25c54",
+        "shadow": "0 24px 60px rgba(10, 5, 0, 0.5)",
+        "field": "rgba(20, 14, 8, 0.75)",
+        "device": "#18110a",
+        "device2": "#2a1d12",
+        "border_highlight": "rgba(255, 255, 255, 0.08)",
     }
 
 
@@ -86,6 +90,7 @@ def inject_css(mode: str) -> None:
         :root {{
           --bg: {t["bg"]};
           --bg2: {t["bg2"]};
+          --overlay: {t["overlay"]};
           --surface: {t["surface"]};
           --surface2: {t["surface2"]};
           --ink: {t["ink"]};
@@ -99,14 +104,22 @@ def inject_css(mode: str) -> None:
           --field: {t["field"]};
           --device: {t["device"]};
           --device2: {t["device2"]};
+          --border-highlight: {t["border_highlight"]};
+        }}
+
+        [data-testid="stAppViewContainer"] {{
+          background: transparent !important;
+        }}
+        [data-testid="stHeader"] {{
+          background: transparent !important;
         }}
 
         .stApp {{
           color: var(--ink);
           background:
-            radial-gradient(circle at 18% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 30%),
-            radial-gradient(circle at 86% 20%, color-mix(in srgb, var(--accent3) 20%, transparent), transparent 32%),
-            linear-gradient(135deg, var(--bg), var(--bg2) 52%, var(--bg));
+            var(--overlay),
+            url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif") no-repeat center center fixed;
+          background-size: cover !important;
         }}
 
         .block-container {{
@@ -121,6 +134,10 @@ def inject_css(mode: str) -> None:
         h1, h2, h3, h4, p, span, label {{
           color: var(--ink);
           letter-spacing: 0;
+        }}
+
+        div[data-testid="stTabs"] {{
+          background: transparent !important;
         }}
 
         div[data-testid="stTabs"] button {{
@@ -164,13 +181,32 @@ def inject_css(mode: str) -> None:
           transform: translateY(-1px);
         }}
 
+        div[data-testid="stSegmentedControl"] {{
+          background: var(--surface) !important;
+          backdrop-filter: blur(10px);
+          border-radius: 999px;
+          padding: 4px;
+          border: 1px solid var(--line);
+          box-shadow: var(--shadow);
+        }}
+        div[data-testid="stSegmentedControl"] button {{
+          border-radius: 999px !important;
+          border: none !important;
+          color: var(--muted) !important;
+        }}
+        div[data-testid="stSegmentedControl"] button[aria-checked="true"] {{
+          background: var(--surface2) !important;
+          color: var(--ink) !important;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }}
+
         .stButton > button {{
           min-height: 3.2rem;
           border: 0;
           border-radius: 16px;
           color: #fff;
           font-weight: 850;
-          background: linear-gradient(135deg, var(--accent), #ff9f64);
+          background: linear-gradient(135deg, var(--accent), var(--accent2));
           box-shadow: 0 18px 42px color-mix(in srgb, var(--accent) 34%, transparent);
           transition: transform 170ms ease, box-shadow 170ms ease, filter 170ms ease;
         }}
@@ -353,7 +389,7 @@ def inject_css(mode: str) -> None:
           height: 98px;
           border-radius: 20px;
           background:
-            linear-gradient(90deg, rgba(255,136,72,0.75), rgba(124,216,187,0.56)),
+            linear-gradient(90deg, color-mix(in srgb, var(--accent) 75%, transparent), color-mix(in srgb, var(--accent2) 56%, transparent)),
             repeating-linear-gradient(0deg, transparent 0 12px, rgba(255,255,255,0.1) 12px 13px);
           margin: 16px 0;
           animation: pulseGlow 3.2s ease-in-out infinite;
@@ -364,13 +400,13 @@ def inject_css(mode: str) -> None:
           align-items: center;
           justify-content: space-between;
           gap: 12px;
-          border-bottom: 1px solid rgba(255,255,255,0.12);
+          border-bottom: 1px solid var(--line);
           padding: 15px 0;
-          color: rgba(245,245,238,0.72);
+          color: var(--muted);
         }}
 
         .stack-row strong {{
-          color: #f5f5ee;
+          color: var(--ink);
         }}
 
         .fusion-orbit {{
@@ -378,17 +414,17 @@ def inject_css(mode: str) -> None:
           height: 388px;
           border-radius: 26px;
           background:
-            radial-gradient(circle at center, rgba(255,136,72,0.34), transparent 28%),
-            radial-gradient(circle at 68% 28%, rgba(145,179,255,0.26), transparent 24%),
-            rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.1);
+            radial-gradient(circle at center, color-mix(in srgb, var(--accent) 34%, transparent), transparent 28%),
+            radial-gradient(circle at 68% 28%, color-mix(in srgb, var(--accent3) 26%, transparent), transparent 24%),
+            var(--surface2);
+          border: 1px solid var(--line);
           overflow: hidden;
         }}
 
         .ring {{
           position: absolute;
           inset: 60px;
-          border: 1px solid rgba(255,255,255,0.16);
+          border: 1px solid var(--line);
           border-radius: 50%;
           animation: slowSpin 16s linear infinite;
         }}
@@ -403,10 +439,11 @@ def inject_css(mode: str) -> None:
           position: absolute;
           padding: 10px 12px;
           border-radius: 14px;
-          color: #f5f5ee;
-          background: rgba(255,255,255,0.13);
-          border: 1px solid rgba(255,255,255,0.14);
+          color: var(--ink);
+          background: var(--surface);
+          border: 1px solid var(--line);
           backdrop-filter: blur(12px);
+          box-shadow: var(--shadow);
           font-size: 0.82rem;
         }}
 
@@ -421,14 +458,14 @@ def inject_css(mode: str) -> None:
           display: grid;
           place-items: center;
           text-align: center;
-          color: #f5f5ee;
+          color: var(--ink);
         }}
 
         .center-score strong {{
           display: block;
           font-size: 3.4rem;
           line-height: 1;
-          color: #fff;
+          color: var(--ink);
         }}
 
         .section-title {{
@@ -465,7 +502,7 @@ def inject_css(mode: str) -> None:
           background: var(--surface);
           backdrop-filter: blur(22px) saturate(130%);
           -webkit-backdrop-filter: blur(22px) saturate(130%);
-          box-shadow: var(--shadow);
+          box-shadow: var(--shadow), inset 0 1px 0 0 var(--border-highlight);
           animation: riseIn 520ms cubic-bezier(.2,.8,.2,1) both;
         }}
 
