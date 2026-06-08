@@ -12,8 +12,8 @@ from src.schemas import ModalityScore, NewsInput, PredictionResult
 
 
 st.set_page_config(
-    page_title="TruthLens AI | Multi-Modal Fake News & Deepfake Detection",
-    page_icon="ML",
+    page_title="Multi-Modal Fake News & Deepfake Detection System",
+    page_icon="📊",
     layout="wide",
 )
 
@@ -43,42 +43,42 @@ def esc(value: object) -> str:
 def theme_tokens(mode: str) -> dict[str, str]:
     if mode == "Light":
         return {
-            "bg": "rgba(235, 244, 250, 0.85)",
-            "bg2": "rgba(200, 225, 245, 0.8)",
-            "overlay": "radial-gradient(circle at 18% 8%, rgba(0, 132, 255, 0.18), transparent 45%), radial-gradient(circle at 86% 20%, rgba(0, 76, 255, 0.12), transparent 40%), linear-gradient(135deg, rgba(235, 244, 250, 0.82), rgba(200, 225, 245, 0.76) 60%, rgba(220, 235, 248, 0.85))",
-            "surface": "rgba(255, 255, 255, 0.55)",
-            "surface2": "rgba(240, 248, 255, 0.75)",
-            "ink": "#061a33",
-            "muted": "#4a6785",
-            "line": "rgba(14, 89, 199, 0.18)",
-            "accent": "#0e59c7",
-            "accent2": "#0088cc",
-            "accent3": "#00a8cc",
-            "danger": "#d62828",
-            "shadow": "0 24px 60px rgba(14, 89, 199, 0.12)",
-            "field": "rgba(255, 255, 255, 0.8)",
-            "device": "#05101a",
-            "device2": "#0a1c33",
-            "border_highlight": "rgba(255, 255, 255, 0.45)",
+            "bg": "rgba(248, 250, 252, 0.9)",
+            "bg2": "rgba(241, 245, 249, 0.95)",
+            "overlay": "radial-gradient(circle at 18% 8%, rgba(29, 78, 216, 0.06), transparent 45%), radial-gradient(circle at 86% 20%, rgba(30, 64, 175, 0.04), transparent 45%), linear-gradient(135deg, #f8fafc, #f1f5f9)",
+            "surface": "rgba(255, 255, 255, 0.7)",
+            "surface2": "rgba(241, 245, 249, 0.85)",
+            "ink": "#0f172a",
+            "muted": "#475569",
+            "line": "rgba(14, 89, 199, 0.12)",
+            "accent": "#0f59c7",
+            "accent2": "#0284c7",
+            "accent3": "#0891b2",
+            "danger": "#dc2626",
+            "shadow": "0 10px 30px rgba(15, 23, 42, 0.06)",
+            "field": "rgba(255, 255, 255, 0.9)",
+            "device": "#0f172a",
+            "device2": "#1e293b",
+            "border_highlight": "rgba(255, 255, 255, 0.5)",
         }
     return {
-        "bg": "rgba(20, 14, 8, 0.85)",
-        "bg2": "rgba(38, 26, 15, 0.8)",
-        "overlay": "radial-gradient(circle at 18% 8%, rgba(255, 179, 0, 0.15), transparent 45%), radial-gradient(circle at 86% 20%, rgba(255, 102, 0, 0.12), transparent 45%), linear-gradient(135deg, rgba(20, 14, 8, 0.82), rgba(38, 26, 15, 0.76) 60%, rgba(15, 10, 5, 0.95))",
-        "surface": "rgba(38, 26, 15, 0.55)",
-        "surface2": "rgba(56, 38, 22, 0.75)",
-        "ink": "#ffeacc",
-        "muted": "#d1beab",
-        "line": "rgba(255, 179, 0, 0.18)",
-        "accent": "#ff9d00",
-        "accent2": "#ffb703",
-        "accent3": "#fb8500",
-        "danger": "#f25c54",
-        "shadow": "0 24px 60px rgba(10, 5, 0, 0.5)",
-        "field": "rgba(20, 14, 8, 0.75)",
-        "device": "#18110a",
-        "device2": "#2a1d12",
-        "border_highlight": "rgba(255, 255, 255, 0.08)",
+        "bg": "rgba(15, 10, 5, 0.95)",
+        "bg2": "rgba(36, 24, 13, 0.98)",
+        "overlay": "radial-gradient(circle at 18% 8%, rgba(217, 119, 6, 0.12), transparent 45%), radial-gradient(circle at 86% 20%, rgba(245, 158, 11, 0.08), transparent 45%), linear-gradient(135deg, #0f0a05, #24180d 50%, #0f0a05)",
+        "surface": "rgba(36, 24, 13, 0.65)",
+        "surface2": "rgba(54, 36, 20, 0.8)",
+        "ink": "#f8fafc",
+        "muted": "#94a3b8",
+        "line": "rgba(245, 158, 11, 0.16)",
+        "accent": "#d97706",
+        "accent2": "#f59e0b",
+        "accent3": "#ea580c",
+        "danger": "#ef4444",
+        "shadow": "0 10px 30px rgba(0, 0, 0, 0.4)",
+        "field": "rgba(15, 10, 5, 0.85)",
+        "device": "#1c120c",
+        "device2": "#2e1f14",
+        "border_highlight": "rgba(255, 255, 255, 0.06)",
     }
 
 
@@ -116,10 +116,7 @@ def inject_css(mode: str) -> None:
 
         .stApp {{
           color: var(--ink);
-          background:
-            var(--overlay),
-            url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampmeXpvdGJnZTZkYWI4YWQ5N2dqajNtNW8xOXliaW5la2hwem45cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btOfPKQb7mCLxBu/giphy.gif") no-repeat center center fixed;
-          background-size: cover !important;
+          background: var(--overlay);
         }}
 
         .block-container {{
@@ -240,8 +237,7 @@ def inject_css(mode: str) -> None:
           border-radius: 50%;
           color: #fff;
           background: conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
-          box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 28%, transparent);
-          animation: slowSpin 12s linear infinite;
+          box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 20%, transparent);
         }}
 
         .nav-note {{
@@ -250,15 +246,8 @@ def inject_css(mode: str) -> None:
         }}
 
         .hero {{
-          min-height: 620px;
-          display: grid;
-          grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
-          align-items: center;
-          gap: 34px;
-          padding: 34px 0 42px;
-        }}
-
-        .hero-copy-wrap {{
+          min-height: auto;
+          padding: 24px 0 34px;
           animation: riseIn 650ms cubic-bezier(.2,.8,.2,1) both;
         }}
 
@@ -276,10 +265,10 @@ def inject_css(mode: str) -> None:
 
         .hero-title {{
           margin: 0;
-          font-size: clamp(3.2rem, 7vw, 6.9rem);
-          line-height: 0.9;
-          max-width: 760px;
-          letter-spacing: 0;
+          font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+          line-height: 1.15;
+          font-weight: 800;
+          letter-spacing: -0.02em;
         }}
 
         .hero-title span {{
@@ -287,18 +276,18 @@ def inject_css(mode: str) -> None:
         }}
 
         .hero-desc {{
-          margin: 24px 0 0;
-          max-width: 670px;
+          margin: 20px 0 0;
+          max-width: 900px;
           color: var(--muted);
-          font-size: 1.08rem;
-          line-height: 1.72;
+          font-size: 1.12rem;
+          line-height: 1.65;
         }}
 
         .hero-actions {{
           display: flex;
           flex-wrap: wrap;
           gap: 12px;
-          margin-top: 28px;
+          margin-top: 24px;
         }}
 
         .pill {{
@@ -769,10 +758,10 @@ def render_topbar(mode: str) -> None:
         f"""
         <div class="topbar">
           <div class="brand">
-            <div class="brand-mark">AI</div>
+            <div class="brand-mark">ML</div>
             <div>
-              <div>TruthLens AI</div>
-              <div class="nav-note">Multi-modal fake news and deepfake detection system</div>
+              <div>Multi-Modal Misinformation Detector</div>
+              <div class="nav-note">Late-fusion model for text, image, source, and claim modalities</div>
             </div>
           </div>
           <div class="pill"><strong>{esc(mode)}</strong> mode active</div>
@@ -787,53 +776,19 @@ def render_hero() -> None:
         """
         <section class="hero">
           <div class="hero-copy-wrap">
-            <div class="eyebrow">Amazon ML School ready portfolio project</div>
-            <h1 class="hero-title">TruthLens <span>AI</span></h1>
+            <div class="eyebrow">Amazon ML School Portfolio Project</div>
+            <h1 class="hero-title">Multi-Modal Misinformation & Deepfake <span>Detection Pipeline</span></h1>
             <p class="hero-desc">
-              A research-oriented multi-modal system that evaluates news credibility through
-              text semantics, image-forensics signals, source reliability, and claim evidence.
-              The experience is built like a polished AI product while keeping the model pipeline
-              modular enough for DistilBERT, ViT, SHAP, and real benchmark datasets.
+              A scientific Machine Learning framework evaluating news credibility through
+              independent modality encoders. Text semantics (NLP), image manipulation artifacts (CV),
+              source reputation priors, and factual claim-evidence alignment are processed independently 
+              and fused into a threshold-calibrated prediction.
             </p>
             <div class="hero-actions">
-              <div class="pill"><strong>4</strong> modalities fused</div>
-              <div class="pill"><strong>NLP + CV</strong> pipeline</div>
-              <div class="pill"><strong>Explainable</strong> outputs</div>
-              <div class="pill"><strong>ROC-AUC</strong> ready evaluation</div>
-            </div>
-          </div>
-          <div class="device-stage">
-            <div class="device">
-              <div class="device-nav">
-                <strong>truthlens.ai</strong>
-                <span>Live credibility console</span>
-                <span>Fusion v1</span>
-              </div>
-              <div class="device-main">
-                <div class="device-panel">
-                  <div class="eyebrow">Input stream</div>
-                  <h2 style="margin:0;color:#f5f5ee;">Article under review</h2>
-                  <div class="scan-card"></div>
-                  <div class="stack-row"><strong>Headline</strong><span>sensational cue scan</span></div>
-                  <div class="stack-row"><strong>Publisher</strong><span>source prior</span></div>
-                  <div class="stack-row"><strong>Claim</strong><span>evidence match</span></div>
-                  <div class="stack-row"><strong>Image</strong><span>artifact check</span></div>
-                </div>
-                <div class="fusion-orbit">
-                  <div class="ring"></div>
-                  <div class="ring two"></div>
-                  <div class="node a">BERT text</div>
-                  <div class="node b">ViT image</div>
-                  <div class="node c">Source graph</div>
-                  <div class="node d">Claim verifier</div>
-                  <div class="center-score">
-                    <div>
-                      <strong>71%</strong>
-                      <span>fake probability</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <div class="pill"><strong>4</strong> Fused Modalities</div>
+              <div class="pill"><strong>Late Fusion</strong> Strategy</div>
+              <div class="pill"><strong>Interpretability</strong> Layer</div>
+              <div class="pill"><strong>Metrics-Driven</strong> Calibration</div>
             </div>
           </div>
         </section>
@@ -855,11 +810,10 @@ def card(kicker: str, title: str, body: str) -> str:
 def render_overview() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Project Overview</h2>
+        <h2 class="section-title">Pipeline Overview</h2>
         <p class="section-copy">
-          TruthLens AI is designed as a high-impact ML portfolio project: serious problem framing,
-          multiple modalities, explainability, and a clear path from transparent baselines to trained
-          transformer and vision models.
+          This system is designed as a modular misinformation classification pipeline, transitioning from 
+          heuristic baseline encoders to trained transformer-based NLP and deepfake image forensics models.
         </p>
         """,
         unsafe_allow_html=True,
@@ -867,12 +821,12 @@ def render_overview() -> None:
     st.markdown(
         f"""
         <div class="glass-grid">
-          {card("Problem", "Misinformation triage", "Classify suspicious news as Real or Fake with calibrated confidence instead of a single opaque label.")}
-          {card("Input", "Article + headline + image", "Accepts text content, source domain, primary factual claim, trusted evidence snippets, and an optional news image.")}
-          {card("Output", "Explainable risk score", "Returns fake probability, risk band, confidence, modality scores, reviewer actions, and prediction JSON.")}
-          {card("NLP", "Transformer-ready text path", "The text module can be replaced with DistilBERT, RoBERTa, or DeBERTa after training on FakeNewsNet or Kaggle datasets.")}
-          {card("Vision", "Image/deepfake forensics", "The image module is ready for CNN, XceptionNet, EfficientNet, or ViT-based manipulation detection.")}
-          {card("Fusion", "Late ensemble architecture", "Independent modality scores are fused using weighted ensembling, with a clean upgrade path to logistic regression or MLP fusion.")}
+          {card("Problem", "Misinformation classification", "Classify suspicious news items into credibility categories with calibrated probabilities instead of a binary label.")}
+          {card("Input Modalities", "Text, metadata, and images", "Accepts article headline, body text, publisher source domain, primary claim, evidence snippets, and news image.")}
+          {card("Output Metrics", "Calibrated confidence & risk bands", "Computes modality-specific risk scores, fused fake probability, class label, and model explanations.")}
+          {card("NLP Encoder", "Transformer text classifier", "The text processing pipeline is ready for fine-tuning pre-trained models such as DistilBERT, RoBERTa, or DeBERTa.")}
+          {card("Vision Encoder", "Image manipulation forensics", "The image processing pipeline uses feature extraction suitable for deepfake and image forgery classifiers (e.g., EfficientNet, ViT).")}
+          {card("Late Fusion", "Modular ensemble architecture", "Ensembles predictions from individual encoders using weighted averaging, with a path to logistic regression or MLP fusion.")}
         </div>
         """,
         unsafe_allow_html=True,
@@ -1078,10 +1032,10 @@ def render_evaluation() -> None:
 def render_explainability() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Explainable AI Layer</h2>
+        <h2 class="section-title">Model Interpretability (XAI)</h2>
         <p class="section-copy">
-          The prototype already returns readable reasons. The advanced version can attach formal
-          XAI methods to each model layer.
+          The inference pipeline outputs class probabilities along with textual explanations. In the production pipeline, formal
+          eXplainable ML (XAI) methods are integrated into each feature extraction layer.
         </p>
         """,
         unsafe_allow_html=True,
@@ -1104,13 +1058,14 @@ def render_explainability() -> None:
 def render_roadmap() -> None:
     st.markdown(
         """
-        <h2 class="section-title">Build Roadmap</h2>
+        <h2 class="section-title">Development Roadmap</h2>
         <p class="section-copy">
-          This gives the project a serious end-to-end story for resumes, demos, and ML interviews.
+          The development schedule outlines the transition from a heuristic baseline to trained 
+          deep learning models and deployed inference microservices.
         </p>
         <div class="wide-panel">
           <div class="timeline">
-            <div class="timeline-item"><b>Phase 1</b><span>Transparent baseline, Streamlit product UI, sample inference, and model card.</span></div>
+            <div class="timeline-item"><b>Phase 1</b><span>Transparent baseline, Streamlit interface, sample inference, and model card.</span></div>
             <div class="timeline-item"><b>Phase 2</b><span>Train DistilBERT on FakeNewsNet/Kaggle text and compare with TF-IDF logistic regression.</span></div>
             <div class="timeline-item"><b>Phase 3</b><span>Train image/deepfake model with EfficientNet or ViT on DFDC or FaceForensics++ samples.</span></div>
             <div class="timeline-item"><b>Phase 4</b><span>Add sentence-transformer retrieval, NLI claim verification, and SHAP/LIME explanations.</span></div>
@@ -1141,13 +1096,13 @@ render_hero()
 
 tabs = st.tabs(
     [
-        "Overview",
-        "Live Detector",
-        "Architecture",
+        "System Overview",
+        "Model Inference",
+        "Pipeline Architecture",
         "Datasets",
-        "Evaluation",
-        "Explainability",
-        "Roadmap",
+        "Evaluation Metrics",
+        "Interpretability (XAI)",
+        "Development Roadmap",
     ]
 )
 

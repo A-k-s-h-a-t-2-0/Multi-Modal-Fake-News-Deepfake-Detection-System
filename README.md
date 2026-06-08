@@ -2,7 +2,7 @@
 
 An end-to-end research-style machine learning project for detecting misinformation from text, source metadata, claims, and news images.
 
-The project is designed for an Amazon ML School level portfolio: it demonstrates NLP, computer vision, feature fusion, ensemble scoring, explainable AI style outputs, and evaluation planning without requiring a GPU just to run the demo.
+The project is designed for an Amazon ML School level portfolio: it demonstrates NLP, computer vision, feature fusion, ensemble scoring, explainable machine learning outputs, and evaluation planning without requiring a GPU just to run the demo.
 
 ## What It Checks
 
@@ -59,7 +59,7 @@ docs/
 - Computer Vision: image artifact analysis, CNN/ViT-ready interface
 - Feature Fusion: weighted late fusion across modalities
 - Ensemble Learning: independent modality scores combined into final probability
-- Explainable AI: top contributing signals and natural-language rationale
+- Model Explainability: top contributing signals and natural-language rationale
 - Evaluation: accuracy, precision, recall, F1, ROC-AUC
 
 ## Recommended Real Training Datasets
