@@ -3,3 +3,10 @@ __pycache__/
 .pytest_cache/
 *.py[cod]
 streamlit.*.log
+
+# Frontend ignores
+node_modules/
+build/
+dist/
+.env*
+

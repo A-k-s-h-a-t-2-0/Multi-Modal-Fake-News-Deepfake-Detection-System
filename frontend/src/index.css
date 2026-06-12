@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-cyan-950 bg-sky-50 transition-colors duration-500;
+  }
+  
+  .dark body {
+    @apply text-orange-50 bg-[#0f0704];
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-lg border border-white/50 shadow-xl shadow-cyan-900/5;
+  }
+  
+  .dark .glass-panel {
+    @apply bg-[#1a0b07]/70 backdrop-blur-xl border border-orange-900/40 shadow-2xl shadow-black/50;
+  }
+  
+  /* Scrollbar Aesthetics */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyan-300 rounded-full;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-orange-800 rounded-full;
+  }
+}
