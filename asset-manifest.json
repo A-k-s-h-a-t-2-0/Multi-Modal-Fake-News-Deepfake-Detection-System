@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/css/main.bcdf9cce.css",
-    "main.js": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/js/main.e971a658.js",
+    "main.js": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/js/main.fed276ca.js",
     "static/js/453.d7446e4a.chunk.js": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/js/453.d7446e4a.chunk.js",
     "index.html": "/Multi-Modal-Fake-News-Deepfake-Detection-System/index.html",
     "main.bcdf9cce.css.map": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/css/main.bcdf9cce.css.map",
-    "main.e971a658.js.map": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/js/main.e971a658.js.map",
+    "main.fed276ca.js.map": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/js/main.fed276ca.js.map",
     "453.d7446e4a.chunk.js.map": "/Multi-Modal-Fake-News-Deepfake-Detection-System/static/js/453.d7446e4a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bcdf9cce.css",
-    "static/js/main.e971a658.js"
+    "static/js/main.fed276ca.js"
   ]
 }
